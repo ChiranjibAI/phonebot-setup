@@ -1,124 +1,168 @@
 # 📱 PhoneBot Setup — OpenClaw on Android (Termux + Shizuku)
 
-> One-command setup to turn any Android phone into an AI-powered phone controller using OpenClaw + Termux + Shizuku.
+> **Ek command se koi bhi Android phone ko AI-powered phone controller banao!**
+
+[![Run on Termux](https://img.shields.io/badge/Termux-Ready-000?logo=android)](https://f-droid.org/en/packages/com.termux/)
+[![Shizuku](https://img.shields.io/badge/Shizuku-Required-FF5722)](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
 
 ---
 
-## ⚡ Quick Setup (2 commands)
+## ⚡ One-Command Setup (Bas 2 minute)
+
+### Step 1: Pehle ye apps install karo (Manual)
+
+| App | Kahan se | Kyu zaroori? |
+|-----|----------|-------------|
+| **Termux** | [F-Droid](https://f-droid.org/en/packages/com.termux/) (NOT Play Store) | OpenClaw yahan chalega |
+| **Shizuku** | [Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) | Phone control ke liye permissions |
+| **Shizuku (F-Droid backup)** | [GitHub](https://github.com/Shizuku/wrapper-box/releases) | Agar Play Store na mile toh |
+
+> ⚠️ **Important:** Termux F-Droid se install karo, Play Store wala nahi. Play Store version outdated hai!
+
+### Step 2: Termux kholo aur yeh ek command do
 
 ```bash
-# Step 1: Shizuku setup (MANUAL - required)
-# → Play Store se "Shizuku" install karo
-# → Shizuku app kholo → "Start via ADB" tap karo
-# → PC pe: adb pair <IP:PORT>
-
-# Step 2: Ye ek command se sab ho jayega:
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/phonebot-setup/main/setup.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ChiranjibAI/phonebot-setup/main/setup.sh)"
 ```
 
-Ya directly Termux mein yeh run karo:
+### Step 3: Shizuku start karo (Manual)
+
+```
+1. Shizuku app kholo
+2. "Start via ADB" pe tap karo
+3. Agar PC hai toh: adb pair <IP:PORT>
+   Ya "Start via wireless ADB" use karo (Termux se: am start -n moe.shizuku.privileged.api/.MainActivity)
+```
+
+---
+
+## 📋 Complete Setup Flow
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Apps Install karo (2-3 min)                            │
+│     ├── Termux (F-Droid)                                    │
+│     └── Shizuku (Play Store)                               │
+├─────────────────────────────────────────────────────────────┤
+│  2. Termux mein yeh command do (5 min)                      │
+│     └── bash -c "$(curl ... )"                            │
+│         ├── Packages update                                 │
+│         ├── OpenClaw install                               │
+│         ├── phone_control.sh create                        │
+│         └── Workspace setup                                │
+├─────────────────────────────────────────────────────────────┤
+│  3. Shizuku start karo (1 min)                             │
+│     ├── Shizuku app → Start via ADB                        │
+│     └── Wireless ya PC se pair karo                        │
+├─────────────────────────────────────────────────────────────┤
+│  4. OpenClaw configure karo aur enjoy!                     │
+│     └── openclaw setup                                     │
+│     └── openclaw gateway start                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔧 What This Script Does (Automatic)
+
+- ✅ Termux packages update
+- ✅ nodejs, git, curl, wget, openssh, termux-api install
+- ✅ OpenClaw npm install
+- ✅ `phone_control.sh` script create (phone control ke liye)
+- ✅ Workspace files setup
+- ✅ Claw Use APK install (try)
+
+---
+
+## 📱 phone_control.sh — Available Commands
+
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/phonebot-setup/main/setup.sh)"
+# Screen Control
+bash ~/phone_control.sh tap 500 800        # Tap karna
+bash ~/phone_control.sh swipe 500 1500 500 500  # Scroll/swipe
+bash ~/phone_control.sh text "Hello"      # Text type karo
+bash ~/phone_control.sh key 4             # Key press (4=back, 3=home)
+
+# Apps & URLs
+bash ~/phone_control.sh open-app com.android.settings  # App kholo
+bash ~/phone_control.sh open-url "https://google.com"  # Website kholo
+
+# System Info
+bash ~/phone_control.sh battery           # Battery check
+bash ~/phone_control.sh wifi on           # WiFi on
+bash ~/phone_control.sh wifi off          # WiFi off
+bash ~/phone_control.sh screenshot        # Screenshot lo
+
+# Advanced
+bash ~/phone_control.sh ui-dump           # Screen elements dekho
+bash ~/phone_control.sh shell "ls -la"    # Shell command run karo
+bash ~/phone_control.sh home              # Home button
+bash ~/phone_control.sh back               # Back button
 ```
 
 ---
 
-## 🔧 Requirements
+## 🔑 Shizuku Setup — Detailed Guide
 
-| Requirement | Type | Notes |
-|-------------|------|-------|
-| **Termux** | Mandatory | [F-Droid](https://f-droid.org/) se install karo (Play Store version nahi) |
-| **Shizuku** | Mandatory | Play Store se install + ADB pairing |
-| **ADB** | For Shizuku | PC pe install hona chahiye |
-| **OpenClaw** | Auto-installed | Script kar dega |
-
----
-
-## 📋 Manual Steps (Cannot be automated)
-
-### 1. Shizuku Setup
+### Option A: PC se ADB Pair (Sabse Aasaan)
 
 ```
-1. Play Store → "Shizuku" install karo
-2. Shizuku app kholo
-3. "Start via ADB" pe tap karo
-4. PC pe terminal kholo aur yeh commands do:
-   
+1. PC pe ADB tools install karo
+   - Windows: https://developer.android.com/studio/releases/platform-tools
+   - Linux: sudo apt install adb
+   - Mac: brew install adb
+
+2. Phone → Settings → About Phone → Build Number pe 7 baar tap karo (Developer Mode on)
+
+3. Phone → Settings → Developer Options → Wireless Debug ON karo
+
+4. PC pe yeh command do:
    adb pair <IP:PORT>
-   # PORT usually 5555 ya jo screen pe dikhe
-   
-   adb shell
-   # Verify: rish -c 'echo OK'
-   # Agar "OK" aaya toh Shizuku ready hai!
+
+5. Shizuku app kholo → "Start via ADB" → Pairing code do
 ```
 
-### 2. Claw Use App (Optional)
-
-Accessibility features ke liye:
-- APK automatically install hoga (script try karega)
-- Agar fail ho toh: `Settings → Accessibility → Claw Use → ON`
-
----
-
-## ✅ What the Script Does (Automatic)
-
-- [x] Termux packages update
-- [x] nodejs, git, curl, wget, openssh, termux-api install
-- [x] OpenClaw npm install
-- [x] phone_control.sh create (Shizuku-based phone control script)
-- [x] Workspace files setup (IDENTITY.md, SOUL.md, AGENTS.md, TOOLS.md)
-- [x] Claw Use APK install (try)
-
----
-
-## 🚀 After Setup
+### Option B: Termux se Shizuku Start (PC-free)
 
 ```bash
-# 1. Verify Shizuku
+# Termux mein yeh karo:
+pkg install -y termux-api
+
+# Shizuku app kholo aur "Start via Termux" choose karo
+# Ya directly yeh command do:
+am start -n moe.shizuku.privileged.api/.MainActivity
+```
+
+### Option C: Wireless ADB ( bina wire ke)
+
+```
+1. Phone → Settings → Developer Options → Wireless Debug ON
+2. IP address aur PORT note karo (192.168.x.x:5555)
+3. PC ya Phone se connect karo:
+   adb connect <IP:PORT>
+4. Shizuku → Start via ADB
+```
+
+---
+
+## 🚀 After Setup — Getting Started
+
+```bash
+# 1. Verify Shizuku (OK aana chahiye)
 rish -c 'echo Shizuku OK'
 
-# 2. OpenClaw setup
+# 2. OpenClaw setup (instructions follow karo)
 openclaw setup
 
-# 3. Gateway start
+# 3. Gateway start karo
 openclaw gateway start
 
-# 4. Test phone control
+# 4. Test karo
 bash ~/phone_control.sh battery
+
+# 5. UI elements dekho (kya kya screen pe hai)
 bash ~/phone_control.sh ui-dump
 ```
-
----
-
-## 📱 phone_control.sh Commands
-
-| Command | Description |
-|---------|-------------|
-| `bash ~/phone_control.sh battery` | Battery status |
-| `bash ~/phone_control.sh wifi on/off` | WiFi toggle |
-| `bash ~/phone_control.sh open-app com.android.settings` | Open app |
-| `bash ~/phone_control.sh open-url "https://google.com"` | Open URL |
-| `bash ~/phone_control.sh tap 500 800` | Tap coordinates |
-| `bash ~/phone_control.sh swipe 500 1500 500 500` | Swipe |
-| `bash ~/phone_control.sh text "Hello"` | Type text |
-| `bash ~/phone_control.sh key 4` | Send keyevent (4=back, 3=home, 66=enter) |
-| `bash ~/phone_control.sh home` | Go home |
-| `bash ~/phone_control.sh back` | Press back |
-| `bash ~/phone_control.sh screenshot` | Screenshot |
-| `bash ~/phone_control.sh ui-dump` | Read screen UI elements |
-| `bash ~/phone_control.sh shell "command"` | Run shell command |
-
----
-
-## 🔒 How It Works
-
-```
-User → Telegram/WhatsApp → OpenClaw Gateway → phone_control.sh → Shizuku (rish) → Android System
-```
-
-- **Shizuku** = Root-level permissions bina root ke (ADB-based)
-- **rish** = Shizuku ka command-line tool
-- **phone_control.sh** = Wrapper jo rish/adb/su use karke phone control kare
 
 ---
 
@@ -126,25 +170,92 @@ User → Telegram/WhatsApp → OpenClaw Gateway → phone_control.sh → Shizuku
 
 | Problem | Solution |
 |---------|----------|
-| `rish not found` | Shizuku app kholo → "Start via ADB" again |
-| `permission denied` | Shizuku ki permissions re-grant karo |
-| APK install failed | Manual: Settings → Accessibility → Claw Use → ON |
-| phone_control.sh fail | Pehle `rish -c 'echo OK'` verify karo |
+| `rish not found` | Shizuku app kholo → Start via ADB again |
+| `permission denied` | Shizuku ki pairing expires ho sakti hai → re-pair karo |
+| Termux update fail | `pkg update` manually run karo |
+| OpenClaw install fail | `npm install -g openclaw` manually try karo |
+| APK install fail | Manual: Settings → Accessibility → Claw Use → ON |
 
 ---
 
-## 📂 Files
+## 📦 All Download Links (One Place)
+
+| App | Download Link | Notes |
+|-----|---------------|-------|
+| **Termux** | [F-Droid](https://f-droid.org/en/packages/com.termux/) | Play Store MATLAB! |
+| **Shizuku** | [Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) | Main app |
+| **Shizuku Alt** | [GitHub Releases](https://github.com/Shizuku/wrapper-box/releases) | Backup download |
+| **OpenClaw** | [npm](https://www.npmjs.com/package/openclaw) | Auto-install hoga |
+| **ADB Platform Tools** | [Google](https://developer.android.com/studio/releases/platform-tools) | PC ke liye |
+| **Claw Use (Optional)** | [GitHub](https://github.com/claw-use/claw-use-android/releases) | Accessibility features |
+
+---
+
+## 🏗️ Architecture — Kaise Kaam Karta Hai
 
 ```
-setup.sh              # Main setup script
-README.md             # This file
-phone_control.sh      # Auto-created by setup (not in repo)
+┌──────────────────────────────────────────────────────────────┐
+│                                                              │
+│   Telegram / WhatsApp / Signal                              │
+│         ↓                                                    │
+│   OpenClaw Gateway (AI Brain)                                │
+│         ↓                                                    │
+│   phone_control.sh (Command Runner)                          │
+│         ↓                                                    │
+│   rish (Shizuku CLI)                                         │
+│         ↓                                                    │
+│   Android System (Root-level Control)                        │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**No PC needed for daily use!** 
+- Initial setup mein PC/ADB for Shizuku pairing
+- Baaki sab Termux se hi hoga
+
+---
+
+## 📂 Repo Structure
+
+```
+phonebot-setup/
+├── setup.sh       # Main setup script (one-liner runnable)
+└── README.md      # Yeh documentation
 ```
 
 ---
 
-## 🌐 Connect
+## 🌟 Features
 
-Built with [OpenClaw](https://github.com/openclaw/openclaw) + [Shizuku](https://shizuku.rikka.app/)
+- 📱 **Full Phone Control** — Tap, swipe, type, open apps, screenshots
+- 🤖 **AI-Powered** — OpenClaw brain handles natural language
+- 💬 **Multi-Platform** — Telegram, WhatsApp, Signal, Discord
+- 🔒 **Secure** — Shizuku gives precise permissions only
+- ⚡ **Fast** — Local processing, no cloud dependency for control
+- 🌍 **Open Source** — MIT License
 
-Questions? Issues? → Open a GitHub Issue!
+---
+
+## 📜 License
+
+MIT License — koi bhi use kar sakta hai, modify kar sakta hai!
+
+---
+
+## 🤝 Contributing
+
+Issues aur PRs welcome hain!
+[GitHub Issues](https://github.com/ChiranjibAI/phonebot-setup/issues)
+
+---
+
+## 🔗 Quick Links
+
+- [OpenClaw Docs](https://docs.openclaw.ai)
+- [Shizuku Official](https://shizuku.rikka.app)
+- [Termux Official](https://termux.com)
+- [OpenClaw GitHub](https://github.com/openclaw/openclaw)
+
+---
+
+**Made with ❤️ for Android power users**

@@ -2,7 +2,7 @@
 #===============================================================
 # PhoneBot Setup — OpenClaw + Phone Control (Termux + Shizuku)
 # Run: bash ~/phonebot-setup.sh
-# GitHub: https://github.com/YOUR_USERNAME/phonebot-setup
+# GitHub: https://github.com/ChiranjibAI/phonebot-setup
 #===============================================================
 
 set -e
