@@ -291,6 +291,102 @@ Agar sab kuch chal raha hai toh MUBARAK! 🎉🎉🎉
 
 ---
 
+## 🔧 Claw Use App — Kya Hai Aur Kyu Zaroori Hai?
+
+**Claw Use** = Android Accessibility Service based phone control. Ye OpenClaw ko screen elements dekhne aur tap/klik karne ki permission deta hai.
+
+### ⭐ Latest Version: v1.8.0 — 37 Endpoints!
+
+### ⬇️ Download Claw Use
+
+| Method | Link | Steps |
+|--------|------|-------|
+| **Direct APK (Recommended)** | [claw-use-android-v1.8.0.apk](https://github.com/claw-use/claw-use-android/releases/download/v1.8.0/claw-use-android-v1.8.0.apk) | Download → Install → Enable |
+| **All Versions** | [Releases Page](https://github.com/claw-use/claw-use-android/releases) | Historical versions |
+
+### 📋 Claw Use Install Steps — Complete Guide
+
+```
+Step 1: APK Download Karo
+├── Phone pe browser kholo
+├── Ye link paste karo:
+│   https://github.com/claw-use/claw-use-android/releases/download/v1.8.0/claw-use-android-v1.8.0.apk
+├── "Download" pe tap karo
+└── Wait for download complete (~4.2MB)
+
+Step 2: APK Install Karo
+├── Download complete hone ke baad notification tap karo
+├── Ya Files app → Downloads mein jao
+├── "claw-use-android-v1.8.0.apk" pe tap karo
+├── "Install" pe tap karo
+├── Security warning aaye toh "Install anyway" karo
+└── Installation complete hone tak wait karo
+
+Step 3: Unknown Apps Permission Do (Agar zaroorat ho)
+├── Settings → Apps → Claw Use kholo
+├── "Install unknown apps" ya "Unknown apps" pe tap karo
+├── Termux ya Browser choose karo
+└── "Allow" ON karo
+
+Step 4: Accessibility Service Enable Karo (ZAROORI!)
+├── Settings kholo
+├── Search: "Accessibility" ya "Accessibility services"
+├── "Accessibility" pe tap karo
+├── Claw Use dhundho (apps list mein)
+├── Claw Use pe tap karo
+├── "Use Claw Use" ya "ON" toggle karo
+└── Confirmation maango toh "Allow" karo ✅
+```
+
+### 🎯 Claw Use Features (37 Endpoints!)
+
+| Category | Endpoints |
+|----------|-----------|
+| **Perception** | /screen, /screenshot, /notifications, /screen/state, /info, /status |
+| **Action** | /tap, /click, /longpress, /swipe, /scroll, /type, /global, /launch, /intent |
+| **Audio** | /tts, /tts/voices, /audio/record |
+| **Device I/O** | /clipboard, /camera, /volume, /battery, /wifi, /location, /vibrate, /contacts, /sms, /file |
+| **Security** | /screen/wake, /screen/lock, /screen/unlock, /config, /ping |
+
+### 📱 CLI Commands (Termux mein use karo)
+
+```bash
+# Install ke baad ye commands available hain:
+cua clipboard      # Clipboard read/write
+cua camera         # Photo capture  
+cua volume         # Volume control
+cua battery       # Battery info
+cua wifi          # WiFi info
+cua location      # GPS location
+cua vibrate       # Vibration patterns
+cua contacts      # Phone contacts CRUD
+cua sms           # SMS read/send
+cua file          # File upload/download/list
+```
+
+### ⚡ v1.8.0 Highlights
+
+| Feature | Improvement |
+|---------|-------------|
+| **Speed** | ~50x faster screen parsing (400+ nodes in ~50ms) |
+| **New Endpoint** | /screen/fast — lightweight screen state |
+| **Verification** | /click, /tap, /swipe with verify=true returns post-action state |
+| **Text Matching** | Exact match first, then substring fallback |
+
+### ❓ Claw Use vs Shizuku — Kyu Do Alag Apps?
+
+| | **Shizuku** | **Claw Use** |
+|--|-------------|--------------|
+| **Purpose** | Root-level shell commands | Screen reading + accessibility actions |
+| **Method** | ADB-based | Android Accessibility Service |
+| **Use Case** | tap, swipe, shell, battery, wifi | /screen, /click, /type, /notifications |
+| **Setup** | ADB pairing (one-time) | Accessibility toggle (one-time) |
+| **Together?** | ✅ Best with both! | OpenClaw uses both for full control |
+
+**Recommendation:** Dono install karo — OpenClaw automatically appropriate method use karega.
+
+---
+
 ## 🆘 Problem Solving — Common Errors Aur Solutions
 
 ### ❌ "rish not found" Error
@@ -356,7 +452,8 @@ Solution:
 | **Shizuku (GitHub)** | [Releases Page](https://github.com/RikkaApps/Shizuku/releases) | ~5MB | Latest version yahan se |
 | **Shizuku (Play Store)** | [Play Store](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) | ~5MB | Quick install |
 | **ADB Platform Tools** | [Google Official](https://developer.android.com/studio/releases/platform-tools) | ~10MB | PC ke liye |
-| **Claw Use (Optional)** | [GitHub Releases](https://github.com/claw-use/claw-use-android/releases) | ~15MB | Accessibility features |
+| **Claw Use** | [Direct APK v1.8.0](https://github.com/claw-use/claw-use-android/releases/download/v1.8.0/claw-use-android-v1.8.0.apk) | ~4.2MB | Accessibility + 37 endpoints |
+| **Claw Use (All Releases)** | [Releases Page](https://github.com/claw-use/claw-use-android/releases) | ~4MB each | Version history |
 
 ---
 
